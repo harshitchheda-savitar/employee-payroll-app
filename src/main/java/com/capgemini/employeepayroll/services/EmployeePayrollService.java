@@ -1,6 +1,7 @@
 package com.capgemini.employeepayroll.services;
 
 import com.capgemini.employeepayroll.dtos.EmployeeDTO;
+import com.capgemini.employeepayroll.exceptions.EmployeePayrollException;
 import com.capgemini.employeepayroll.interfaces.IEmployee;
 import com.capgemini.employeepayroll.models.Employee;
 import com.capgemini.employeepayroll.repositories.EmployeePayrollRepository;
@@ -40,7 +41,7 @@ public class EmployeePayrollService implements IEmployee {
     public Response getEmployeeDetails() {
         List<Employee> employeeList = employeePayrollRepository.findEmployeeByIsActive(Constants.ONE);
         if (employeeList.size() == Constants.ZERO)
-            return new Response(HttpStatus.NO_CONTENT.value(),  Message.EMPLOYEE_LIST_NOT_FOUND);
+            throw new EmployeePayrollException(HttpStatus.NO_CONTENT.value(), Message.EMPLOYEE_LIST_NOT_FOUND);
 
         employeeList.forEach(employee -> employee.setDepartmentList(employee.getDepartmentList().parallelStream().filter(department -> department.getIsActive() == Constants.ONE).collect(Collectors.toSet())));
         List<EmployeeDTO> employeeDTOList = employeeList.stream().map(employee -> modelMapper.map(employee, EmployeeDTO.class)).collect(Collectors.toList());

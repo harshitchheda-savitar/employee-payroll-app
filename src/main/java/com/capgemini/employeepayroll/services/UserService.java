@@ -1,6 +1,7 @@
 package com.capgemini.employeepayroll.services;
 
 import com.capgemini.employeepayroll.dtos.UserDTO;
+import com.capgemini.employeepayroll.exceptions.UserException;
 import com.capgemini.employeepayroll.interfaces.IUser;
 import com.capgemini.employeepayroll.models.User;
 import com.capgemini.employeepayroll.repositories.UserRepository;
@@ -41,10 +42,10 @@ public class UserService implements IUser {
     @Override
     public Response loginUser(UserDTO userDTO) {
         Optional<User> user = userRepository.findFirstByUserNameAndPasswordAndIsActive(userDTO.getUserName(), userDTO.getPassword(), Constants.ONE);
-        if (!user.isPresent())
-            return new Response(HttpStatus.NO_CONTENT.value(), Message.USER_NOT_FOUND);
+        if (user.isEmpty())
+            throw new UserException(HttpStatus.NO_CONTENT.value(), Message.USER_NOT_FOUND);
 
         String jwtTokenString = tokenHelper.generateToken(user.get().getId() + user.get().getUserName(), environment.getProperty("token.issuer"), environment.getProperty("token.subject"), Long.parseLong(environment.getProperty("token.expirationTime")));
-        return  new Response(HttpStatus.OK.value(), jwtTokenString, Message.USER_LOGGED_IN);
+        return new Response(HttpStatus.OK.value(), jwtTokenString, Message.USER_LOGGED_IN);
     }
 }

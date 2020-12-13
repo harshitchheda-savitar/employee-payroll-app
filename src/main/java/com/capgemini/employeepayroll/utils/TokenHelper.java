@@ -1,11 +1,10 @@
 package com.capgemini.employeepayroll.utils;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.capgemini.employeepayroll.exceptions.JWTException;
+import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpStatus;
 
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
@@ -54,10 +53,12 @@ public class TokenHelper {
     private Claims extractAllClaims(String token) {
         try {
             return Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(environment.getProperty("token.key"))).parseClaimsJws(token).getBody();
-        } catch (Exception e) {
-            //TODO
+        }catch (ExpiredJwtException ex){
+            throw new JWTException(HttpStatus.BAD_REQUEST.value(), Message.JWT_TOKEN_EXPIRED);
         }
-        return null;
+        catch (Exception e) {
+            throw new JWTException(HttpStatus.BAD_REQUEST.value(), Message.INVALID_JWT_TOKEN);
+        }
     }
 
     private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
