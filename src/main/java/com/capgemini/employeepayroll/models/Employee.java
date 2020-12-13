@@ -1,8 +1,10 @@
 package com.capgemini.employeepayroll.models;
 
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Employee Model class for employee details
@@ -40,8 +42,12 @@ public class Employee {
     @Column(name = "last_updated")
     private Date lastUpdated;
 
-    @ElementCollection
-    private List<String> departmentList;
+    @Column(name = "is_active")
+    private int isActive;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "emp_id")
+    private Set<Department> departmentList;
 
     public long getId() {
         return id;
@@ -107,11 +113,35 @@ public class Employee {
         this.lastUpdated = lastUpdated;
     }
 
-    public List<String> getDepartmentList() {
+    public int getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(int isActive) {
+        this.isActive = isActive;
+    }
+
+    public Set<Department> getDepartmentList() {
         return departmentList;
     }
 
-    public void setDepartmentList(List<String> departmentList) {
+    public void setDepartmentList(Set<Department> departmentList) {
         this.departmentList = departmentList;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", empName='" + empName + '\'' +
+                ", profileUrl='" + profileUrl + '\'' +
+                ", gender='" + gender + '\'' +
+                ", salary=" + salary +
+                ", startDate=" + startDate +
+                ", createdDate=" + createdDate +
+                ", lastUpdated=" + lastUpdated +
+                ", isActive=" + isActive +
+                ", departmentList=" + departmentList +
+                '}';
     }
 }
