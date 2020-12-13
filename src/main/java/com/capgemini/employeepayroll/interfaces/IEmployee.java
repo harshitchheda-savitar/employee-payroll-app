@@ -13,5 +13,5 @@ public interface IEmployee {
      * Method to fetch employee related details
      * @return Response object
      */
-    public Response getEmployeeDetails();
+    Response getEmployeeDetails();
 }
