@@ -1,5 +1,9 @@
 package com.capgemini.employeepayroll.dtos;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -12,6 +16,9 @@ import java.util.Set;
  * @author Harshit Chheda
  * @date 2020/12/13
  */
+@Getter
+@Setter
+@ToString
 public class EmployeeDTO {
 
     @NotNull
@@ -26,64 +33,4 @@ public class EmployeeDTO {
     @NotNull
     private Date startDate;
     private Set<DepartmentDTO> departmentList;
-
-    public String getEmpName() {
-        return empName;
-    }
-
-    public void setEmpName(String empName) {
-        this.empName = empName;
-    }
-
-    public String getProfileUrl() {
-        return profileUrl;
-    }
-
-    public void setProfileUrl(String profileUrl) {
-        this.profileUrl = profileUrl;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public int getSalary() {
-        return salary;
-    }
-
-    public void setSalary(int salary) {
-        this.salary = salary;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Set<DepartmentDTO> getDepartmentList() {
-        return departmentList;
-    }
-
-    public void setDepartmentList(Set<DepartmentDTO> departmentList) {
-        this.departmentList = departmentList;
-    }
-
-    @Override
-    public String toString() {
-        return "EmployeeDTO{" +
-                "empName='" + empName + '\'' +
-                ", profileUrl='" + profileUrl + '\'' +
-                ", gender='" + gender + '\'' +
-                ", salary=" + salary +
-                ", startDate=" + startDate +
-                ", departmentList=" + departmentList +
-                '}';
-    }
 }

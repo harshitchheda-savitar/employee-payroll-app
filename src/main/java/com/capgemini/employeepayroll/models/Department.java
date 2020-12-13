@@ -1,5 +1,8 @@
 package com.capgemini.employeepayroll.models;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 /**
@@ -10,6 +13,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "emp_department_mapping")
+@Getter
+@Setter
 public class Department {
 
     @Id
@@ -25,46 +30,4 @@ public class Department {
 
     @Column(name = "is_active")
     private int isActive;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public long getEmpId() {
-        return empId;
-    }
-
-    public void setEmpId(long empId) {
-        this.empId = empId;
-    }
-
-    public String getDeptName() {
-        return deptName;
-    }
-
-    public void setDeptName(String deptName) {
-        this.deptName = deptName;
-    }
-
-    public int getIsActive() {
-        return isActive;
-    }
-
-    public void setIsActive(int isActive) {
-        this.isActive = isActive;
-    }
-
-    @Override
-    public String toString() {
-        return "Department{" +
-                "id=" + id +
-                ", empId=" + empId +
-                ", deptName='" + deptName + '\'' +
-                ", isActive=" + isActive +
-                '}';
-    }
 }
