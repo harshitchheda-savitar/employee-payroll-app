@@ -32,6 +32,6 @@ public class EmployeePayrollController {
     @RequestMapping(value = "/employee/list", method = RequestMethod.GET)
     public ResponseEntity<Response> getEmployee() {
         Response response = iEmployeeService.getEmployeeDetails();
-        return new ResponseEntity<Response>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

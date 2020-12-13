@@ -128,20 +128,4 @@ public class Employee {
     public void setDepartmentList(Set<Department> departmentList) {
         this.departmentList = departmentList;
     }
-
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "id=" + id +
-                ", empName='" + empName + '\'' +
-                ", profileUrl='" + profileUrl + '\'' +
-                ", gender='" + gender + '\'' +
-                ", salary=" + salary +
-                ", startDate=" + startDate +
-                ", createdDate=" + createdDate +
-                ", lastUpdated=" + lastUpdated +
-                ", isActive=" + isActive +
-                ", departmentList=" + departmentList +
-                '}';
-    }
 }
