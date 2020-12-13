@@ -52,12 +52,15 @@ public class TokenHelper {
 
     private Claims extractAllClaims(String token) {
         try {
+            if (token == null)
+                throw new RequiredTypeException(token);
             return Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(environment.getProperty("token.key"))).parseClaimsJws(token).getBody();
-        }catch (ExpiredJwtException ex){
-            throw new JWTException(HttpStatus.BAD_REQUEST.value(), Message.JWT_TOKEN_EXPIRED);
-        }
-        catch (Exception e) {
-            throw new JWTException(HttpStatus.BAD_REQUEST.value(), Message.INVALID_JWT_TOKEN);
+        } catch (ExpiredJwtException ex) {
+            throw new JWTException(HttpStatus.UNAUTHORIZED.value(), Message.JWT_TOKEN_EXPIRED);
+        } catch (RequiredTypeException reqEx) {
+            throw new JWTException(HttpStatus.UNAUTHORIZED.value(), Message.JWT_TOKEN_REQUIRED);
+        } catch (Exception e) {
+            throw new JWTException(HttpStatus.UNAUTHORIZED.value(), Message.INVALID_JWT_TOKEN);
         }
     }
 

@@ -14,4 +14,5 @@ public interface Message {
     String USER_LOGGED_IN = "User logged in successfully";
     String JWT_TOKEN_EXPIRED = "Token has expired";
     String INVALID_JWT_TOKEN = "Invalid Token";
+    String JWT_TOKEN_REQUIRED = "Authorization Jwt Token Required in Header";
 }
