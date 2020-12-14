@@ -67,4 +67,15 @@ public class EmployeePayrollController {
         Response response = iEmployeeService.deleteEmployee(employeeName);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    /**
+     * Api for updating employee
+     *
+     * @return ResponseEntity object containing employee deletion status and message
+     */
+    @RequestMapping(value = "/edit", method = RequestMethod.PUT)
+    public ResponseEntity<Response> editEmployee(@Valid @RequestBody EmployeeDTO employeeDTO) {
+        Response response = iEmployeeService.editEmployee(employeeDTO);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }

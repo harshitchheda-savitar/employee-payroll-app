@@ -20,4 +20,6 @@ public interface Message {
     String EMPLOYEE_COUNT_FOUND = "Employee Count found";
     String EMPLOYEE_NOT_DELETED = "Employee not deleted";
     String EMPLOYEE_DELETED = "Employee deleted successfully";
+    String EMPLOYEE_NOT_UPDATED = "Employee not updated";
+    String EMPLOYEE_UPDATED = "Employee updated successfully";
 }

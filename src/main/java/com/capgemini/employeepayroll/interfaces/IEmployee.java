@@ -39,4 +39,12 @@ public interface IEmployee {
      * @return Response object
      */
     Response deleteEmployee(String employeeName);
+
+    /**
+     * Method to edit employee in DB
+     *
+     * @param employeeDTO for updating the employee
+     * @return Response object
+     */
+    Response editEmployee(EmployeeDTO employeeDTO);
 }

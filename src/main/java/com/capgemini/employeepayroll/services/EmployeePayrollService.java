@@ -3,6 +3,7 @@ package com.capgemini.employeepayroll.services;
 import com.capgemini.employeepayroll.dtos.EmployeeDTO;
 import com.capgemini.employeepayroll.exceptions.EmployeePayrollException;
 import com.capgemini.employeepayroll.interfaces.IEmployee;
+import com.capgemini.employeepayroll.models.Department;
 import com.capgemini.employeepayroll.models.Employee;
 import com.capgemini.employeepayroll.repositories.EmployeePayrollRepository;
 import com.capgemini.employeepayroll.utils.Constants;
@@ -80,7 +81,7 @@ public class EmployeePayrollService implements IEmployee {
     }
 
     /**
-     * Service method for deleting employee employee from DB
+     * Service method for deleting employee from DB
      *
      * @param employeeName to be deleted
      * @return Response object containing employee deletion status and message
@@ -94,5 +95,31 @@ public class EmployeePayrollService implements IEmployee {
         employee.get().setIsActive(Constants.ZERO);
         employeePayrollRepository.save(employee.get());
         return new Response(HttpStatus.OK.value(), Message.EMPLOYEE_DELETED);
+    }
+
+    /**
+     * Service method for updating employee details in DB
+     *
+     * @param employeeDTO for updating the employee
+     * @return Response object containing employee updation status and message
+     */
+    @Override
+    public Response editEmployee(EmployeeDTO employeeDTO) {
+        Optional<Employee> employee = employeePayrollRepository.findEmployeeByEmpNameAndIsActive(employeeDTO.getEmpName(), Constants.ONE);
+        if (employee.isEmpty())
+            throw new EmployeePayrollException(HttpStatus.NOT_MODIFIED.value(), Message.EMPLOYEE_NOT_UPDATED);
+
+        Employee empDB = employee.get();
+        Employee emp = modelMapper.map(employeeDTO, Employee.class);
+        emp.setId(empDB.getId());
+        empDB.getDepartmentList().forEach(departmentDB -> departmentDB.setIsActive(Constants.ZERO));
+        empDB.getDepartmentList().forEach(departmentDB -> {
+            Optional<Department> department1 = emp.getDepartmentList().stream().filter(department -> departmentDB.getDeptName().equals(department.getDeptName())).findFirst();
+            if (department1.isPresent())
+                departmentDB.setIsActive(Constants.ONE);
+        });
+        emp.setDepartmentList(empDB.getDepartmentList());
+        employeePayrollRepository.save(emp);
+        return new Response(HttpStatus.OK.value(), Message.EMPLOYEE_UPDATED);
     }
 }
