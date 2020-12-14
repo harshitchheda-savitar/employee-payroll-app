@@ -31,4 +31,12 @@ public interface IEmployee {
      * @return Response object
      */
     Response getEmployeeCount();
+
+    /**
+     * Method to delete employee from DB
+     *
+     * @param employeeName for deleting the employee by name
+     * @return Response object
+     */
+    Response deleteEmployee(String employeeName);
 }

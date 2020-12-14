@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Repository class for DDL related methods
@@ -15,9 +16,11 @@ import java.util.List;
 @Repository
 public interface EmployeePayrollRepository extends JpaRepository<Employee, Long> {
 
-    List<Employee> findEmployeeByIsActive(int isActive);
+    List<Employee> findEmployeesByIsActive(int isActive);
 
     int countByEmpNameAndIsActive(String empName, int isActive);
 
     int countByIsActive(int isActive);
+
+    Optional<Employee> findEmployeeByEmpNameAndIsActive(String empName, int isActive);
 }

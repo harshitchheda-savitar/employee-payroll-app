@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -41,7 +42,7 @@ public class EmployeePayrollService implements IEmployee {
      */
     @Override
     public Response getEmployeeDetails() {
-        List<Employee> employeeList = employeePayrollRepository.findEmployeeByIsActive(Constants.ONE);
+        List<Employee> employeeList = employeePayrollRepository.findEmployeesByIsActive(Constants.ONE);
         if (employeeList.size() == Constants.ZERO)
             throw new EmployeePayrollException(HttpStatus.NO_CONTENT.value(), Message.EMPLOYEE_LIST_NOT_FOUND);
 
@@ -76,5 +77,22 @@ public class EmployeePayrollService implements IEmployee {
         Map<String, Object> countMap = new HashMap<>();
         countMap.put("empCount", employeePayrollRepository.countByIsActive(Constants.ONE));
         return new Response(HttpStatus.OK.value(), new Gson().toJson(countMap), Message.EMPLOYEE_COUNT_FOUND);
+    }
+
+    /**
+     * Service method for deleting employee employee from DB
+     *
+     * @param employeeName to be deleted
+     * @return Response object containing employee deletion status and message
+     */
+    @Override
+    public Response deleteEmployee(String employeeName) {
+        Optional<Employee> employee = employeePayrollRepository.findEmployeeByEmpNameAndIsActive(employeeName, Constants.ONE);
+        if (employee.isEmpty())
+            throw new EmployeePayrollException(HttpStatus.NOT_MODIFIED.value(), Message.EMPLOYEE_NOT_DELETED);
+
+        employee.get().setIsActive(Constants.ZERO);
+        employeePayrollRepository.save(employee.get());
+        return new Response(HttpStatus.OK.value(), Message.EMPLOYEE_DELETED);
     }
 }

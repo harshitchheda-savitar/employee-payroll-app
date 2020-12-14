@@ -18,4 +18,6 @@ public interface Message {
     String EMPLOYEE_ALREADY_EXISTS = "Employee already exists";
     String EMPLOYEE_ADDED = "Employee added successfully";
     String EMPLOYEE_COUNT_FOUND = "Employee Count found";
+    String EMPLOYEE_NOT_DELETED = "Employee not deleted";
+    String EMPLOYEE_DELETED = "Employee deleted successfully";
 }
