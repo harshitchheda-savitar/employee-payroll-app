@@ -16,4 +16,6 @@ import java.util.List;
 public interface EmployeePayrollRepository extends JpaRepository<Employee, Long> {
 
     List<Employee> findEmployeeByIsActive(int isActive);
+
+    int countByEmpNameAndIsActive(String empName, int isActive);
 }

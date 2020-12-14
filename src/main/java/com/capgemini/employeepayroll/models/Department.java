@@ -18,16 +18,13 @@ import javax.persistence.*;
 public class Department {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private long id;
 
-    @Column(name = "emp_id")
-    private long empId;
-
-    @Column(name = "dept_name")
+    @Column(name = "dept_name", columnDefinition = "VARCHAR(20) NOT NULL")
     private String deptName;
 
-    @Column(name = "is_active")
-    private int isActive;
+    @Column(name = "is_active", columnDefinition = "SMALLINT NOT NULL DEFAULT 1")
+    private int isActive = 1;
 }

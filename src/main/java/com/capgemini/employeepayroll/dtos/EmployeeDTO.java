@@ -32,5 +32,6 @@ public class EmployeeDTO {
     private int salary;
     @NotNull
     private Date startDate;
+    private String notes;
     private Set<DepartmentDTO> departmentList;
 }

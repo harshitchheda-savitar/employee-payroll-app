@@ -1,5 +1,6 @@
 package com.capgemini.employeepayroll.interfaces;
 
+import com.capgemini.employeepayroll.dtos.EmployeeDTO;
 import com.capgemini.employeepayroll.utils.Response;
 
 /**
@@ -11,7 +12,16 @@ import com.capgemini.employeepayroll.utils.Response;
 public interface IEmployee {
     /**
      * Method to fetch employee related details
+     *
      * @return Response object
      */
     Response getEmployeeDetails();
+
+    /**
+     * Method to add employee related details to Db
+     *
+     * @param employeeDTO object containing employee details fetched from frontend
+     * @return Response object
+     */
+    Response addEmployeeDetails(EmployeeDTO employeeDTO);
 }

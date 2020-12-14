@@ -47,4 +47,20 @@ public class EmployeePayrollService implements IEmployee {
         List<EmployeeDTO> employeeDTOList = employeeList.stream().map(employee -> modelMapper.map(employee, EmployeeDTO.class)).collect(Collectors.toList());
         return new Response(HttpStatus.OK.value(), new Gson().toJson(employeeDTOList), Message.EMPLOYEE_LIST_FOUND);
     }
+
+    /**
+     * Service method for adding employee details with payroll and department details
+     *
+     * @return Response object containing added statusCode and message
+     */
+    @Override
+    public Response addEmployeeDetails(EmployeeDTO employeeDTO) {
+        int empCount = employeePayrollRepository.countByEmpNameAndIsActive(employeeDTO.getEmpName(), Constants.ONE);
+        if (empCount >= Constants.ONE)
+            throw new EmployeePayrollException(HttpStatus.NOT_MODIFIED.value(), Message.EMPLOYEE_ALREADY_EXISTS);
+
+        Employee employee = modelMapper.map(employeeDTO, Employee.class);
+        employeePayrollRepository.save(employee);
+        return new Response(HttpStatus.OK.value(), Message.EMPLOYEE_ADDED);
+    }
 }
