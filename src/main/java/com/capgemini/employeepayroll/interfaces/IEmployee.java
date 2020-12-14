@@ -24,4 +24,11 @@ public interface IEmployee {
      * @return Response object
      */
     Response addEmployeeDetails(EmployeeDTO employeeDTO);
+
+    /**
+     * Method to get employee count
+     *
+     * @return Response object
+     */
+    Response getEmployeeCount();
 }

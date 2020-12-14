@@ -17,4 +17,5 @@ public interface Message {
     String JWT_TOKEN_REQUIRED = "Authorization Jwt Token Required in Header";
     String EMPLOYEE_ALREADY_EXISTS = "Employee already exists";
     String EMPLOYEE_ADDED = "Employee added successfully";
+    String EMPLOYEE_COUNT_FOUND = "Employee Count found";
 }

@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -62,5 +64,17 @@ public class EmployeePayrollService implements IEmployee {
         Employee employee = modelMapper.map(employeeDTO, Employee.class);
         employeePayrollRepository.save(employee);
         return new Response(HttpStatus.OK.value(), Message.EMPLOYEE_ADDED);
+    }
+
+    /**
+     * Service method for fetching active employee count
+     *
+     * @return Response object containing employee-count object
+     */
+    @Override
+    public Response getEmployeeCount() {
+        Map<String, Object> countMap = new HashMap<>();
+        countMap.put("empCount", employeePayrollRepository.countByIsActive(Constants.ONE));
+        return new Response(HttpStatus.OK.value(), new Gson().toJson(countMap), Message.EMPLOYEE_COUNT_FOUND);
     }
 }

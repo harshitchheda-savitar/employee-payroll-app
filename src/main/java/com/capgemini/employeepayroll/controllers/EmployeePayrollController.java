@@ -45,4 +45,15 @@ public class EmployeePayrollController {
         Response response = iEmployeeService.addEmployeeDetails(employeeDTO);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    /**
+     * Api for fetching active employee-count
+     *
+     * @return ResponseEntity object containing employee count as payload
+     */
+    @RequestMapping(value = "/count", method = RequestMethod.GET)
+    public ResponseEntity<Response> getEmployeeCount() {
+        Response response = iEmployeeService.getEmployeeCount();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
