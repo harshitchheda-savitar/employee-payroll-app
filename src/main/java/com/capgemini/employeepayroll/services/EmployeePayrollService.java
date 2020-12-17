@@ -37,7 +37,7 @@ public class EmployeePayrollService implements IEmployee {
     private ModelMapper modelMapper;
 
     /**
-     * Service method for fetching active employee details with payroll and department details
+     * Service method for fetching active employee details list with payroll and department details
      *
      * @return Response object containing active employees list
      */
@@ -50,6 +50,23 @@ public class EmployeePayrollService implements IEmployee {
         employeeList.forEach(employee -> employee.setDepartmentList(employee.getDepartmentList().parallelStream().filter(department -> department.getIsActive() == Constants.ONE).collect(Collectors.toSet())));
         List<EmployeeDTO> employeeDTOList = employeeList.stream().map(employee -> modelMapper.map(employee, EmployeeDTO.class)).collect(Collectors.toList());
         return new Response(HttpStatus.OK.value(), new Gson().toJson(employeeDTOList), Message.EMPLOYEE_LIST_FOUND);
+    }
+
+    /**
+     * Service method for fetching active employee details with payroll and department details
+     *
+     * @param empName for fetching the employee details with payroll and department details
+     * @return Response object containing active employees list
+     */
+    @Override
+    public Response getEmployeeDetails(String empName) {
+        Optional<Employee> employee = employeePayrollRepository.findEmployeeByEmpNameAndIsActive(empName, Constants.ONE);
+        if (employee.isEmpty())
+            throw new EmployeePayrollException(HttpStatus.NOT_MODIFIED.value(), Message.EMPLOYEE_DETAILS_NOT_FOUND);
+
+        employee.get().setDepartmentList(employee.get().getDepartmentList().parallelStream().filter(department -> department.getIsActive() == Constants.ONE).collect(Collectors.toSet()));
+        EmployeeDTO employeeDTO = modelMapper.map(employee, EmployeeDTO.class);
+        return new Response(HttpStatus.OK.value(), new Gson().toJson(employeeDTO), Message.EMPLOYEE_DETAILS_FOUND);
     }
 
     /**

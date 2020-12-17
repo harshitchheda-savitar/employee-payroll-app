@@ -30,8 +30,19 @@ public class EmployeePayrollController {
      * @return ResponseEntity object containing employeeList as payload
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ResponseEntity<Response> getEmployee() {
+    public ResponseEntity<Response> getEmployeeList() {
         Response response = iEmployeeService.getEmployeeDetails();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    /**
+     * Api for fetching employee along with department and payroll details
+     *
+     * @return ResponseEntity object containing employee as payload
+     */
+    @RequestMapping(value = "/details", method = RequestMethod.GET)
+    public ResponseEntity<Response> getEmployee(@RequestParam String empName) {
+        Response response = iEmployeeService.getEmployeeDetails(empName);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

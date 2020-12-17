@@ -22,4 +22,6 @@ public interface Message {
     String EMPLOYEE_DELETED = "Employee deleted successfully";
     String EMPLOYEE_NOT_UPDATED = "Employee not updated";
     String EMPLOYEE_UPDATED = "Employee updated successfully";
+    String EMPLOYEE_DETAILS_NOT_FOUND = "Employee details not found";
+    String EMPLOYEE_DETAILS_FOUND = "Employee details found";
 }

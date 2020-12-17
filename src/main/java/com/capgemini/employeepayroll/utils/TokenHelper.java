@@ -69,8 +69,8 @@ public class TokenHelper {
         return claimsResolver.apply(claims);
     }
 
-    private String extractSubject(String token) {
-        return extractClaim(token, Claims::getSubject);
+    public String extractId(String token) {
+        return extractClaim(token, Claims::getId);
     }
 
     private Date extractExpiration(String token) {

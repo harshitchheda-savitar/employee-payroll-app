@@ -18,6 +18,14 @@ public interface IEmployee {
     Response getEmployeeDetails();
 
     /**
+     * Method to fetch employee related details
+     *
+     * @param employeeName whose details to be fetchec
+     * @return Response object
+     */
+    Response getEmployeeDetails(String employeeName);
+
+    /**
      * Method to add employee related details to Db
      *
      * @param employeeDTO object containing employee details fetched from frontend
